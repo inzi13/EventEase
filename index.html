@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EventEase – Discover Events. Create Memories.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="nav">
+  <a href="#home" class="logo" aria-label="EventEase home">
+    <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="url(#g)"/><path d="M9 11h14M9 16h14M9 21h8" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><defs><linearGradient id="g" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#8b5cf6"/><stop offset="1" stop-color="#4c1d95"/></linearGradient></defs></svg>
+    EventEase
+  </a>
+  <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  <nav id="menu">
+    <a href="#home" data-nav="home">Home</a>
+    <a href="#events" data-nav="events">Events</a>
+    <a href="#register" data-nav="register">Register</a>
+    <a href="#admin" data-nav="admin">Admin</a>
+  </nav>
+</header>
+
+<main>
+<!-- HOME -->
+<section class="view" id="view-home">
+  <div class="hero">
+    <h1>Discover Events. Create Memories.</h1>
+    <p>Browse hackathons, workshops, cultural nights and competitions happening near you, and save your seat in under a minute.</p>
+    <div class="hero-actions">
+      <a class="btn" href="#events">Explore events</a>
+      <a class="btn ghost" href="#register">Register now</a>
+    </div>
+    <div class="stats"><div><b id="stat-events">0</b><span>upcoming events</span></div><div><b id="stat-regs">0</b><span>registrations</span></div></div>
+  </div>
+
+  <div class="wrap" id="events">
+    <h2>Upcoming events</h2>
+    <div class="toolbar">
+      <div class="chips" id="chips" role="tablist" aria-label="Event categories"></div>
+      <input type="search" id="search" placeholder="Search events or venues" aria-label="Search events">
+    </div>
+    <div class="grid" id="event-grid"></div>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section class="view" id="view-register" hidden>
+  <div class="wrap narrow">
+    <h2>Register for an event</h2>
+    <form id="reg-form" class="card form" novalidate>
+      <label>Full name
+        <input id="f-name" name="name" type="text" autocomplete="name" required>
+        <small class="err" data-for="name"></small>
+      </label>
+      <label>Email address
+        <input id="f-email" name="email" type="email" autocomplete="email" required>
+        <small class="err" data-for="email"></small>
+      </label>
+      <label>Phone number
+        <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="10-digit mobile number" required>
+        <small class="err" data-for="phone"></small>
+      </label>
+      <label>College / Organisation
+        <input id="f-org" name="org" type="text" autocomplete="organization" required>
+        <small class="err" data-for="org"></small>
+      </label>
+      <label>Select event
+        <select id="f-event" name="event" required></select>
+        <small class="err" data-for="event"></small>
+      </label>
+      <div class="preview" id="reg-preview"></div>
+      <button class="btn" type="submit">Submit registration</button>
+    </form>
+  </div>
+</section>
+
+<!-- CONFIRMATION -->
+<section class="view" id="view-confirmation" hidden>
+  <div class="wrap narrow">
+    <div class="card confirm" id="confirm-card"></div>
+  </div>
+</section>
+
+<!-- ADMIN -->
+<section class="view" id="view-admin" hidden>
+  <div class="wrap">
+    <div id="admin-login" class="card form narrow-card">
+      <h2>Admin sign in</h2>
+      <p class="muted">Enter the admin passcode to manage events and participants.</p>
+      <form id="login-form">
+        <label>Passcode <input type="password" id="admin-pass" autocomplete="current-password"></label>
+        <small class="err" id="login-err"></small>
+        <button class="btn" type="submit">Sign in</button>
+      </form>
+    </div>
+
+    <div id="admin-panel" hidden>
+      <div class="row-between">
+        <h2>Admin dashboard</h2>
+        <button class="btn ghost sm" id="logout">Sign out</button>
+      </div>
+
+      <div class="kpis">
+        <div class="card"><b id="k-events">0</b><span>Events</span></div>
+        <div class="card"><b id="k-regs">0</b><span>Registrations</span></div>
+        <div class="card"><b id="k-today">0</b><span>Registered today</span></div>
+      </div>
+
+      <div class="card">
+        <div class="row-between">
+          <h3>Participants</h3>
+          <div class="row">
+            <input type="search" id="p-search" placeholder="Search participants" aria-label="Search participants">
+            <button class="btn ghost sm" id="export-csv">Export CSV</button>
+          </div>
+        </div>
+        <div class="table-wrap"><table id="p-table"><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Event</th><th>Registered on</th><th></th></tr></thead><tbody></tbody></table></div>
+      </div>
+
+      <div class="card">
+        <h3>Manage events</h3>
+        <form id="event-form" class="form two-col" novalidate>
+          <label>Event name <input name="name" type="text" required></label>
+          <label>Category
+            <select name="category" required>
+              <option>Technical</option><option>Cultural</option><option>Workshops</option><option>Competitions</option>
+            </select>
+          </label>
+          <label>Date <input name="date" type="date" required></label>
+          <label>Time <input name="time" type="time" required></label>
+          <label>Venue <input name="venue" type="text" required></label>
+          <label>Image URL (optional) <input name="image" type="url" placeholder="https://…"></label>
+          <label class="full">Description <textarea name="description" rows="3" required></textarea></label>
+          <small class="err full" id="event-err"></small>
+          <button class="btn" type="submit">Add event</button>
+        </form>
+        <div class="table-wrap"><table id="e-table"><thead><tr><th>Event</th><th>Category</th><th>Date</th><th>Venue</th><th>Registered</th><th></th></tr></thead><tbody></tbody></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>© <span id="yr"></span> EventEase · Data is stored in your browser (localStorage).</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
